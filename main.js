@@ -18,7 +18,6 @@ function flipCard(player) {
   console.log(playedCard);
   game.centralPile.unshift(playedCard);
   game.playerTurn = swapPlayer(game.playerTurn);
-  // (game.playerTurn === 1) ? game.playerTurn = 0 : game.playerTurn = 1;}
 }
 
 function swapPlayer(player) {
