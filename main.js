@@ -14,12 +14,14 @@ function keyPress(key) {
 }
 
 function flipCard(player) {
+  var other = otherPlayer(player);
   var playedCard = game.players[player].playCard();
-  console.log(playedCard);
+  console.log(`Player ${player} flips:  ${playedCard}`);
   game.centralPile.unshift(playedCard);
-  game.playerTurn = swapPlayer(game.playerTurn);
+  if (game.players[other].hand.length === 0) return;  
+  game.playerTurn = otherPlayer(game.playerTurn);
 }
 
-function swapPlayer(player) {
+function otherPlayer(player) {
   return (player === 0) ? 1 : 0;
 }

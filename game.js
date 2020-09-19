@@ -7,6 +7,7 @@ class Game {
   }
 
   shuffleDeck(shuffleCards, player) {
+    console.log(`Player ${player} gets ${this.centralPile.length} cards!`)
     this.centralPile = [];
     this.players[player].hand = [];
     while (shuffleCards.length > 0) {
@@ -14,10 +15,6 @@ class Game {
       var card = shuffleCards.splice(i, 1);
       this.players[player].hand.push(card[0]);
     }
-  }
-
-  shuffle() {
-
   }
 
   dealDeck() {
@@ -30,20 +27,20 @@ class Game {
   }
 
   checkSlap(player) {
-    var topCard = this.centralPile[0].charAt(0);
-    var secCard = this.centralPile[1].charAt(0);
-    var thirdCard = this.centralPile[2].charAt(0);
-    if (topCard === 'J' || topCard === secCard || topCard === thirdCard) {
+    if (this.centralPile.length > 2) var thirdCard = this.centralPile[2].charAt(0);
+    if (this.centralPile.length > 1) var secCard = this.centralPile[1].charAt(0);
+    if (this.centralPile.length > 0) var topCard = this.centralPile[0].charAt(0);
+    if (topCard === 'J' ||topCard === 'W' || topCard === secCard || topCard === thirdCard) {
       var shuffleCards = this.centralPile.concat(this.players[player].hand)
       this.shuffleDeck(shuffleCards, player);
     } else this.penalize(player);
   }
 
   penalize(player) {
-    console.log('BAD');
     var penaltyCard = this.players[player].hand.shift();
     (player === 0) ? player = 1 : player = 0;
     this.players[player].hand.push(penaltyCard);
+    console.log(`Player ${player} penalized ${penaltyCard}!`);
   }
 
   // resetGame(){
