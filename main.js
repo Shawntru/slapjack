@@ -15,10 +15,10 @@ function keyPress(key) {
 
 function flipCard(player) {
   var playedCard = game.players[player].playCard();
-  console.log(`Player ${player} flips:  ${playedCard}`);
+  // console.log(`Player ${player} flips:  ${playedCard}`);
   game.centralPile.unshift(playedCard);
-  if (game.players[other(player)].hand.length === 0) return;
-  game.playerTurn = other(game.playerTurn);
+  if (!game.players[other(player)].hand.length) return;
+  game.playerTurn = other(player);
 }
 
 function other(player) {
