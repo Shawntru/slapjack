@@ -7,7 +7,7 @@ class Game {
   }
 
   shuffleDeck(shuffleCards, player) {
-    console.log(`Player ${player} gets ${this.centralPile.length} cards!`)
+    // console.log(`Player ${player} gets ${this.centralPile.length} cards!`)
     this.centralPile = [];
     this.players[player].hand = [];
     while (shuffleCards.length > 0) {
@@ -15,7 +15,7 @@ class Game {
       var card = shuffleCards.splice(i, 1);
       this.players[player].hand.push(card[0]);
     }
-    if (this.players[player].hand.length === 54) endGame();
+    if (this.players[player].hand.length === 54) this.endGame();
   }
 
   dealDeck() {
@@ -41,7 +41,7 @@ class Game {
   endGame() {
     var winner;
     (this.players[0].hand.length === 54) ? winner = this.players[0] : winner = this.players[1];
-    console.log(`WInner is Player ${winner.id}!`);
+    // console.log(`WInner is ${winner.id}!`);
   }
 
   canSlap(topCard, player) {
@@ -52,10 +52,12 @@ class Game {
   }
 
   penalize(player) {
-    if (!this.players[player].hand.length) this.endGame();
-    var penaltyCard = this.players[player].hand.shift();
+    var playerHand = this.players[player].hand;
+    if (!playerHand.length) this.endGame();
+    var penaltyCard = playerHand.shift();
     this.players[other(player)].hand.push(penaltyCard);
-    console.log(`Player ${player} penalized ${penaltyCard}!`);
+    if (!playerHand.length) this.playerTurn = other(player);
+    // console.log(`Player ${player} penalized ${penaltyCard}!`);
   }
 
   // resetGame(){
