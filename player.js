@@ -6,9 +6,7 @@ class Player {
   }
 
   playCard() {
-    var card = this.hand.shift();
-    console.log(card);
-    return card;
+    return this.hand.shift();
   }
 
   saveWinsToStorage() {
