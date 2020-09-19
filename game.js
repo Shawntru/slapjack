@@ -1,7 +1,7 @@
 class Game {
   constructor() {
     this.centralPile = [];
-    this.playerTurn = 1;
+    this.playerTurn = 0;
     this.players = [];
     this.resetGame();
   }
@@ -29,7 +29,7 @@ class Game {
     var player1 = new Player('player1');
     this.players.push(player0);
     this.players.push(player1);
-    this.playerTurn = 1;
+    this.playerTurn = 0;
     this.dealDeck();
   }
 

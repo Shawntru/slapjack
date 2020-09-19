@@ -5,8 +5,10 @@ class Player {
     this.hand = [];
   }
 
-  playCard(key) {
-    console.log(key)
+  playCard() {
+    var card = this.hand.shift();
+    console.log(card);
+    return card;
   }
 
   saveWinsToStorage() {
