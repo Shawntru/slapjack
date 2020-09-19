@@ -17,9 +17,10 @@ function flipCard(player) {
   var playedCard = game.players[player].playCard();
   console.log(playedCard);
   game.centralPile.unshift(playedCard);
-  toggleTurn();
+  game.playerTurn = swapPlayer(game.playerTurn);
+  // (game.playerTurn === 1) ? game.playerTurn = 0 : game.playerTurn = 1;}
 }
 
-function toggleTurn() {
-  (game.playerTurn === 1) ? game.playerTurn = 0 : game.playerTurn = 1;
+function swapPlayer(player) {
+  return (player === 0) ? 1 : 0;
 }

@@ -1,9 +1,9 @@
 class Game {
   constructor() {
-    this.centralPile = [];
+    this.centralPile = fullDeck;
     this.playerTurn = 0;
     this.players = [new Player('player0'), new Player('player1')];
-    this.resetGame();
+    this.dealDeck();
   }
 
   shuffleDeck(shuffleCards, player) {
@@ -16,12 +16,16 @@ class Game {
     }
   }
 
+  shuffle() {
+
+  }
+
   dealDeck() {
     while (this.centralPile.length > 0) {
       var i = this.getRandomIndex(this.centralPile);
       var card = this.centralPile.splice(i, 1);
-      (this.playerTurn === 1) ? this.playerTurn = 0 : this.playerTurn = 1;
       this.players[this.playerTurn].hand.push(card[0]);
+      (this.playerTurn === 1) ? this.playerTurn = 0 : this.playerTurn = 1;
     }
   }
 
@@ -37,12 +41,14 @@ class Game {
 
   penalize(player) {
     console.log('BAD');
+    var penaltyCard = this.players[player].hand.shift();
+    (player === 0) ? player = 1 : player = 0;
+    this.players[player].hand.push(penaltyCard);
   }
 
-  resetGame(){
-    this.centralPile = fullDeck;
-    this.dealDeck();
-  }
+  // resetGame(){
+  //   this.dealDeck();
+  // }
 
   getRandomIndex(array) {
     return Math.floor(Math.random() * array.length);
