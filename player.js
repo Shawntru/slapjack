@@ -1,12 +1,12 @@
 class Player {
-  constructor(id) {
-    this.id = id;
+  constructor(playerNum) {
+    this.id = playerNum;
     this.wins = 0;
     this.hand = [];
   }
 
-  playCard() {
-
+  playCard(key) {
+    console.log(key)
   }
 
   saveWinsToStorage() {
@@ -14,6 +14,6 @@ class Player {
   }
 
   updateWinCount() {
-    
+
   }
 }
