@@ -18,6 +18,13 @@ class Game {
     if (this.players[player].hand.length === 54) this.endGame();
   }
 
+  flipCard(player) {
+    var playedCard = this.players[player].playCard();
+    this.centralPile.unshift(playedCard);
+    if (!this.players[other(player)].hand.length) return;
+    this.playerTurn = other(player);
+  }
+
   dealDeck() {
     while (this.centralPile.length > 0) {
       var i = this.getRandomIndex(this.centralPile);
@@ -67,9 +74,4 @@ class Game {
   getRandomIndex(array) {
     return Math.floor(Math.random() * array.length);
   }
-
-  other(player) {
-    return (player === 0) ? 1 : 0;
-  }
-
 }
