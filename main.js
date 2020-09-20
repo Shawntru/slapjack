@@ -24,8 +24,8 @@ function flipCard(player) {
 function upgradeGraphic(card, player) {
   var image = document.getElementById('center');
   image.src = `./assets/${card}.png`;
-  image.classList.remove(`.player-${other(player)}`);
-  image.classList.add(`.player-${player}`);
+  image.classList.remove(`player-${other(player)}`);
+  image.classList.add(`player-${player}`);
 }
 
 
