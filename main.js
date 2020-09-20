@@ -15,11 +15,21 @@ function keyPress(key) {
 
 function flipCard(player) {
   var playedCard = game.players[player].playCard();
-  // console.log(`Player ${player} flips:  ${playedCard}`);
   game.centralPile.unshift(playedCard);
+  upgradeGraphic(playedCard, player);
   if (!game.players[other(player)].hand.length) return;
   game.playerTurn = other(player);
 }
+
+function upgradeGraphic(card, player) {
+  var image = document.getElementById('center');
+  image.src = `./assets/${card}.png`;
+  image.classList.remove(`.player-${other(player)}`);
+  image.classList.add(`.player-${player}`);
+}
+
+
+
 
 function other(player) {
   return (player === 0) ? 1 : 0;
