@@ -1,7 +1,7 @@
 class Player {
   constructor(playerNum) {
     this.id = playerNum;
-    this.wins = 0;
+    this.wins = localStorage.getItem(this.id) || 0;
     this.hand = [];
   }
 
@@ -10,10 +10,12 @@ class Player {
   }
 
   saveWinsToStorage() {
-
+    var wins = this.wins.toString();
+    localStorage.setItem(this.id, wins);
   }
 
   updateWinCount() {
     this.wins ++;
+    this.saveWinsToStorage();
   }
 }

@@ -4,6 +4,7 @@ var centerImage = document.getElementById('center');
 
 window.onload = function() {
   game = new Game;
+  updateWins();
 }
 
 document.onkeydown = keyPress;
@@ -42,6 +43,14 @@ function updateCardCount(){
   for (var i = 0; i < 2; i++) {
     var countDisplay = document.getElementById(`${game.players[i].id}-count`);
     countDisplay.innerText = game.players[i].hand.length;
+  }
+}
+
+function updateWins() {
+  for (var i = 0; i < 2; i++) {
+    var winDisplay = document.getElementById(`${i}-wins`);
+    var winCount = localStorage.getItem([i]);
+    if (winCount) winDisplay.innerText = `Wins:  ${winCount}`;
   }
 }
 
