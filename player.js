@@ -14,6 +14,6 @@ class Player {
   }
 
   updateWinCount() {
-
+    this.wins ++;
   }
 }
