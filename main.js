@@ -18,18 +18,26 @@ function keyPress(key) {
 function playerFlip(player) {
   game.flipCard(player);
   updateGraphic(player);
-  console.log(game.players[player]);
+  console.log(`Player ${player} hand size:  ${game.players[player].hand.length}`);
 }
 
 function playerSlap(player) {
   game.checkSlap(player);
   updateGraphic(player);
-  console.log(game.players[player]);
+  console.log(`Player ${player} hand size:  ${game.players[player].hand.length}`);
 }
 
 function updateGraphic(player) {
+  updateCardCount();
   if (checkEmptyPiles(player)) return;
   toggleHighlight(player);
+}
+
+function updateCardCount(){
+  for (var i = 0; i < 2; i++) {
+    var countDisplay = document.getElementById(`${game.players[i].id}-count`);
+    countDisplay.innerText = game.players[i].hand.length;
+  }
 }
 
 function toggleHighlight(player) {
@@ -39,10 +47,15 @@ function toggleHighlight(player) {
   centerImage.classList.add(`player-${player}`);
 }
 
-function checkEmptyPiles(player) {
-  var playerDeck = document.querySelector(`.player-${player}`);
-  if (!game.players[player].hand.length) playerDeck.classList.add('empty-stack')
+function checkEmptyPiles() {
+  for (var i = 0; i < 2; i++) {
+    var playerDeck = document.getElementById(`player-${i}`);
+    if (!game.players[i].hand.length) {
+      playerDeck.classList.add('empty-stack');
+      console.log(playerDeck);
+    }
     else playerDeck.classList.remove('empty-stack');
+  }
   if (!game.centralPile.length) {
     centerImage.src = `./assets/back.png`;
     centerImage.classList.add('empty-stack');

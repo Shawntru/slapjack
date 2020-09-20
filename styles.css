@@ -18,9 +18,14 @@ body, html {
   opacity: 0.25;
 }
 
-.player-cards > * {
+.player-cards > *{
   height: 45vh;
   width: auto;
+}
+
+.card-count {
+  height: 25px;
+  text-align: center;
 }
 
 .card-display {

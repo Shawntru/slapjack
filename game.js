@@ -2,7 +2,7 @@ class Game {
   constructor() {
     this.centralPile = fullDeck;
     this.playerTurn = 0;
-    this.players = [new Player('player0'), new Player('player1')];
+    this.players = [new Player('0'), new Player('1')];
     this.dealDeck();
   }
 
