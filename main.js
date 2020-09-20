@@ -4,33 +4,29 @@ var centerImage = document.getElementById('center');
 
 window.onload = function() {
   game = new Game;
+  updateCardCount();
 }
 
 document.onkeydown = keyPress;
 
 function keyPress(key) {
-  if (key.code === 'KeyQ' && game.playerTurn === 0) playerFlip(0);
-  if (key.code === 'KeyP' && game.playerTurn === 1) playerFlip(1);
-  if (key.code === 'KeyF') playerSlap(0);
-  if (key.code === 'KeyJ') playerSlap(1);
+  if ((key.code === 'KeyQ' && game.playerTurn === 0) ||
+      (key.code === 'KeyP' && game.playerTurn === 1)) updateGameState('flip');
+  if (key.code === 'KeyF') updateGameState('slap', 0);
+  if (key.code === 'KeyJ') updateGameState('slap', 1);
 }
 
-function playerFlip(player) {
-  game.flipCard(player);
-  updateGraphic(player);
-  console.log(`Player ${player} hand size:  ${game.players[player].hand.length}`);
+function updateGameState(action, player) {
+  if (action === 'flip') game.flipCard(game.playerTurn);
+  if (action === 'slap') game.checkSlap(player);
+  updateGraphics();
 }
 
-function playerSlap(player) {
-  game.checkSlap(player);
-  updateGraphic(player);
-  console.log(`Player ${player} hand size:  ${game.players[player].hand.length}`);
-}
-
-function updateGraphic(player) {
+function updateGraphics() {
   updateCardCount();
-  if (checkEmptyPiles(player)) return;
-  toggleHighlight(player);
+  checkEmptyPlayer();
+  if (checkEmptyCenter()) return;
+  updateCentralPile();
 }
 
 function updateCardCount(){
@@ -40,28 +36,27 @@ function updateCardCount(){
   }
 }
 
-function toggleHighlight(player) {
+function updateCentralPile() {
   var card = game.centralPile[0];
   centerImage.src = `./assets/${card}.png`;
-  centerImage.classList.remove(`player-${other(player)}`);
-  centerImage.classList.add(`player-${player}`);
+  centerImage.classList.add(`player-${other(game.playerTurn)}`);
+  centerImage.classList.remove(`player-${game.playerTurn}`);
 }
 
-function checkEmptyPiles() {
+function checkEmptyPlayer() {
   for (var i = 0; i < 2; i++) {
     var playerDeck = document.getElementById(`player-${i}`);
-    if (!game.players[i].hand.length) {
-      playerDeck.classList.add('empty-stack');
-      console.log(playerDeck);
-    }
+    if (!game.players[i].hand.length) playerDeck.classList.add('empty-stack');
     else playerDeck.classList.remove('empty-stack');
   }
+}
+
+function checkEmptyCenter() {
   if (!game.centralPile.length) {
     centerImage.src = `./assets/back.png`;
     centerImage.classList.add('empty-stack');
     return true;
   } else centerImage.classList.remove('empty-stack');
-
 }
 
 function other(player) {
