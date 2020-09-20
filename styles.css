@@ -1,13 +1,33 @@
 * {
-  font-family: Montserrat;
+  font-family: Arial;
   color: white;
+  text-shadow: 0px 0px 18px rgba(245, 161, 35, 1);
 }
 
 body, html {
   background: url('./assets/backdrop.jpg');
-  background-size: cover;
+  background-size: 100%;
   height: 100%;
   width: 100%;
+}
+
+h1 {
+  font-size: 50px;
+  text-align: center;
+  font-style: italic;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+.header {
+  height: auto;
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.player-info {
+  text-align: center;
+  font-style: italic;
 }
 
 .central-back {
@@ -30,9 +50,9 @@ body, html {
 
 .card-display {
   display: flex;
-  height: 100%;
   justify-content: space-around;
   align-items: center;
+  height: 70vh;
 }
 
 .player-0 {
@@ -41,4 +61,13 @@ body, html {
 
 .player-1 {
   box-shadow: 0px 0px 40px 20px #4666FF;
+}
+
+@keyframes glow {
+  from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
 }

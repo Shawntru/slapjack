@@ -26,9 +26,7 @@ function updateGameState(action, player) {
 
 function checkEndGame() {
   for (var i = 0; i < 2; i++) {
-    if (game.players[i].hand.length === 54) {
-      game.endGame([i]);
-    }
+    if (game.players[i].hand.length === 54) game.endGame([i]);
   }
 }
 
