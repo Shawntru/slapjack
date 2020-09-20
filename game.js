@@ -7,7 +7,6 @@ class Game {
   }
 
   shuffleDeck(shuffleCards, player) {
-    // console.log(`Player ${player} gets ${this.centralPile.length} cards!`)
     this.centralPile = [];
     this.players[player].hand = [];
     while (shuffleCards.length > 0) {
@@ -64,7 +63,6 @@ class Game {
     var penaltyCard = playerHand.shift();
     this.players[other(player)].hand.push(penaltyCard);
     if (!playerHand.length) this.playerTurn = other(player);
-    // console.log(`Player ${player} penalized ${penaltyCard}!`);
   }
 
   // resetGame(){
