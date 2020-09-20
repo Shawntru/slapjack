@@ -4,12 +4,12 @@ var centerImage = document.getElementById('center');
 
 window.onload = function() {
   game = new Game;
-  updateCardCount();
 }
 
 document.onkeydown = keyPress;
 
 function keyPress(key) {
+  if (!game.isRunning) return;
   if ((key.code === 'KeyQ' && game.playerTurn === 0) ||
       (key.code === 'KeyP' && game.playerTurn === 1)) updateGameState('flip');
   if (key.code === 'KeyF') updateGameState('slap', 0);
@@ -20,6 +20,15 @@ function updateGameState(action, player) {
   if (action === 'flip') game.flipCard(game.playerTurn);
   if (action === 'slap') game.checkSlap(player);
   updateGraphics();
+  checkEndGame();
+}
+
+function checkEndGame() {
+  for (var i = 0; i < 2; i++) {
+    if (game.players[i].hand.length === 54) {
+      game.endGame([i]);
+    }
+  }
 }
 
 function updateGraphics() {

@@ -3,6 +3,7 @@ class Game {
     this.centralPile = fullDeck;
     this.playerTurn = 0;
     this.players = [new Player('0'), new Player('1')];
+    this.isRunning = true;
     this.dealDeck();
   }
 
@@ -14,7 +15,6 @@ class Game {
       var card = shuffleCards.splice(i, 1);
       this.players[player].hand.push(card[0]);
     }
-    if (this.players[player].hand.length === 54) this.endGame();
   }
 
   flipCard(player) {
@@ -37,17 +37,17 @@ class Game {
     if (this.centralPile.length > 2) var thirdCard = this.centralPile[2].charAt(0);
     if (this.centralPile.length > 1) var secCard = this.centralPile[1].charAt(0);
     if (this.centralPile.length > 0) var topCard = this.centralPile[0].charAt(0);
-    if (this.cantSlap(topCard, player)) return this.endGame();
+    if (this.cantSlap(topCard, player)) return this.endGame(other(player));
     if (topCard === 'J' ||topCard === 'W' || topCard === secCard || topCard === thirdCard) {
       var shuffleCards = this.centralPile.concat(this.players[player].hand)
       this.shuffleDeck(shuffleCards, player);
     } else this.penalize(player);
   }
 
-  endGame() {
-    var winner = (this.players[0].hand.length) ? 0 : 1;
+  endGame(winner) {
     this.players[winner].updateWinCount();
-    console.log(`WInner is ${this.players[winner].id}!`);
+    this.isRunning = false;
+    console.log(`Winner is player ${[winner]}!`);
   }
 
   cantSlap(topCard, player) {
@@ -59,7 +59,7 @@ class Game {
 
   penalize(player) {
     var playerHand = this.players[player].hand;
-    if (!playerHand.length) this.endGame();
+    if (!playerHand.length) this.endGame(other(player));
     var penaltyCard = playerHand.shift();
     this.players[other(player)].hand.push(penaltyCard);
     if (!playerHand.length) this.playerTurn = other(player);
