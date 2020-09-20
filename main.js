@@ -1,41 +1,80 @@
 var game;
 
+var centerImage = document.getElementById('center');
+
 window.onload = function() {
   game = new Game;
+  updateWins();
 }
 
 document.onkeydown = keyPress;
 
 function keyPress(key) {
-  if (!validKey(key)) return;
-  if (key.code === 'KeyQ' && game.playerTurn === 0) game.flipCard(0);
-  if (key.code === 'KeyP' && game.playerTurn === 1) game.flipCard(1);
-  if (key.code === 'KeyF') game.checkSlap(0);
-  if (key.code === 'KeyJ') game.checkSlap(1);
-  updateGameState();
+  if (!game.isRunning) return;
+  if ((key.code === 'KeyQ' && game.playerTurn === 0) ||
+      (key.code === 'KeyP' && game.playerTurn === 1)) updateGameState('flip');
+  if (key.code === 'KeyF') updateGameState('slap', 0);
+  if (key.code === 'KeyJ') updateGameState('slap', 1);
 }
 
-function validKey(key) {
-  var validKeys = ['KeyQ', 'KeyP', 'KeyF', 'KeyJ'];
-  return (validKeys.includes(key.code)) ? true : false;
+function updateGameState(action, player) {
+  if (action === 'flip') game.flipCard(game.playerTurn);
+  if (action === 'slap') game.checkSlap(player);
+  updateGraphics();
+  checkEndGame();
 }
 
-function updateGameState() {
-  updateGraphic();
-//ADD Response here and update for checkSlap
-}
-
-function updateGraphic() {
-  var image = document.getElementById('center');
-  if (!game.centralPile.length) {
-    image.src = `./assets/back.png`;
-    return;
+function checkEndGame() {
+  for (var i = 0; i < 2; i++) {
+    if (game.players[i].hand.length === 54) {
+      game.endGame([i]);
+    }
   }
-  var player = game.playerTurn;
+}
+
+function updateGraphics() {
+  updateCardCount();
+  checkEmptyPlayer();
+  if (checkEmptyCenter()) return;
+  updateCentralPile();
+}
+
+function updateCardCount(){
+  for (var i = 0; i < 2; i++) {
+    var countDisplay = document.getElementById(`${game.players[i].id}-count`);
+    countDisplay.innerText = game.players[i].hand.length;
+  }
+}
+
+function updateWins() {
+  for (var i = 0; i < 2; i++) {
+    var winDisplay = document.getElementById(`${i}-wins`);
+    var winCount = localStorage.getItem([i]);
+    if (winCount) winDisplay.innerText = `Wins:  ${winCount}`;
+  }
+}
+
+function updateCentralPile() {
   var card = game.centralPile[0];
-  image.src = `./assets/${card}.png`;
-  image.classList.remove(`player-${player}`);
-  image.classList.add(`player-${other(player)}`);
+  centerImage.src = `./assets/${card}.png`;
+  centerImage.classList.add(`player-${other(game.playerTurn)}`);
+  centerImage.classList.remove(`player-${game.playerTurn}`);
+}
+
+function checkEmptyPlayer() {
+  for (var i = 0; i < 2; i++) {
+    var playerDeck = document.getElementById(`player-${i}`);
+    if (!game.players[i].hand.length) playerDeck.classList.add('empty-stack');
+    else playerDeck.classList.remove('empty-stack');
+  }
+}
+
+function checkEmptyCenter() {
+  if (!game.centralPile.length) {
+    centerImage.src = `./assets/back.png`;
+    centerImage.classList.add('empty-stack');
+    return true;
+  } else centerImage.classList.remove('empty-stack');
 }
 
 function other(player) {

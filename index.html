@@ -8,19 +8,23 @@
   <body style = "font-family:Candara">
       <section class="card-display">
         <div class="player-cards">
-          <img class="player-0"
+          <p id="0-wins" class="count">Wins:  0</p>
+          <img id="player-0" class="player-0"
+           src="./assets/back.png"
+           alt="Card Back">
+           <h3 class="count" id="0-count">27</h3>
+        </div>
+        <div class="player-cards">
+          <img id="center" class="central-back empty-stack"
            src="./assets/back.png"
            alt="Card Back">
         </div>
         <div class="player-cards">
-          <img id="center" class="central-back"
+          <p id="1-wins" class="count">Wins:  0</p>
+          <img id="player-1" class="player-1"
            src="./assets/back.png"
            alt="Card Back">
-        </div>
-        <div class="player-cards">
-          <img class="player-1"
-           src="./assets/back.png"
-           alt="Card Back">
+           <h3 class="count" id="1-count">27</h3>
         </div>
       </section>
     <script src="./card-data.js"></script>
