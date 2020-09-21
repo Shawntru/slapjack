@@ -1,8 +1,5 @@
 var game;
-
 var centerImage = document.getElementById('center');
-// var player0Cards = document.getElementById('player-0');
-// var player1Cards = document.getElementById('player-1');
 
 window.onload = function() {
   game = new Game;

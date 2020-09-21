@@ -17,6 +17,10 @@ class Game {
     }
   }
 
+  shuffle() {
+    //combine shuffleDeck() and dealDeck() while loops
+  }
+
   flipCard(player) {
     var playedCard = this.players[player].playCard();
     this.centralPile.unshift(playedCard);
