@@ -40,8 +40,12 @@ function checkEndGame() {
   for (var i = 0; i < 2; i++) {
     if (game.players[i].hand.length === 54) game.endGame(i);
   }
-  if (game.isRunning === false)
-    document.getElementById('title').innerText = `Player ${game.winner + 1} Wins!`;
+  if (game.isRunning === false) {
+    var docTitle = document.getElementById('title');
+    var replayBtn = document.getElementById('replay-btn');
+    docTitle.innerText = `Player ${game.winner + 1} Wins!`;
+    replayBtn.classList.remove('hidden');
+  }
 }
 
 function animate(element, animation) {

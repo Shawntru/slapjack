@@ -19,6 +19,10 @@ h1 {
   animation: glow 1s ease-in-out infinite alternate;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .header {
   height: 20%;
   margin: 20px;
@@ -174,6 +178,22 @@ h1 {
 
 .bump {
   animation: bump 0.5s ease-out infinite;
+}
+
+.title-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#replay-btn {
+  width: 50%;
+  height: auto;
+  margin: -40px;
+  font-size: 20px;
+  border-radius: 50px;
+  border: ridge;
+  color: black;
 }
 
 @keyframes slap {
