@@ -7,13 +7,24 @@ class Game {
     this.dealDeck();
   }
 
-  shuffleDeck(shuffleCards, player) {
+  shuffle(cards, player) {
+    var i = this.getRandomIndex(cards);
+    var card = cards.splice(i, 1);
+    this.players[player].hand.push(card[0])
+  }
+
+  shufflePlayerDeck(shuffleCards, player) {
     this.centralPile = [];
     this.players[player].hand = [];
     while (shuffleCards.length > 0) {
-      var i = this.getRandomIndex(shuffleCards);
-      var card = shuffleCards.splice(i, 1);
-      this.players[player].hand.push(card[0]);
+      this.shuffle(shuffleCards, player);
+    }
+  }
+
+  dealDeck() {
+    while (this.centralPile.length > 0) {
+      this.shuffle(this.centralPile, this.playerTurn);
+      this.playerTurn = other(this.playerTurn);
     }
   }
 
@@ -24,15 +35,6 @@ class Game {
     this.playerTurn = other(player);
   }
 
-  dealDeck() {
-    while (this.centralPile.length > 0) {
-      var i = this.getRandomIndex(this.centralPile);
-      var card = this.centralPile.splice(i, 1);
-      this.players[this.playerTurn].hand.push(card[0]);
-      this.playerTurn = other(this.playerTurn);
-    }
-  }
-
   checkSlap(player) {
     if (this.centralPile.length > 2) var thirdCard = this.centralPile[2].charAt(0);
     if (this.centralPile.length > 1) var secCard = this.centralPile[1].charAt(0);
@@ -40,7 +42,7 @@ class Game {
     if (this.cantSlap(topCard, player)) return this.endGame(other(player));
     if (topCard === 'J' ||topCard === 'W' || topCard === secCard || topCard === thirdCard) {
       var shuffleCards = this.centralPile.concat(this.players[player].hand)
-      this.shuffleDeck(shuffleCards, player);
+      this.shufflePlayerDeck(shuffleCards, player);
     } else this.penalize(player);
   }
 
@@ -65,9 +67,21 @@ class Game {
     if (!playerHand.length) this.playerTurn = other(player);
   }
 
-  // resetGame(){
-  //   this.dealDeck();
-  // }
+  checkBothEmpty() {
+    if (!this.centralPile.length) return;
+    var emptyHands = 0;
+    var thisGame = this;
+    var topCard = this.centralPile[0].charAt(0);
+    for (var i = 0; i < 2; i++) {
+      if (!this.players[i].hand.length) emptyHands ++;
+    }
+    if (emptyHands === 2 && !(topCard === 'J')) {
+      window.setTimeout(function() {
+        thisGame.shufflePlayerDeck(thisGame.centralPile, thisGame.playerTurn);
+      }, 1500);
+      return true;
+    };
+  }
 
   getRandomIndex(array) {
     return Math.floor(Math.random() * array.length);

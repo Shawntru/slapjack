@@ -1,5 +1,5 @@
 * {
-  font-family: Arial;
+  font-family: 'Kalam', cursive;
   color: white;
   text-shadow: 0px 0px 18px rgba(245, 161, 35, 1);
 }
@@ -12,7 +12,6 @@ body, html {
 }
 
 h1 {
-  font-family: 'Kalam', cursive;
   font-size: 70px;
   text-align: center;
   font-style: italic;
@@ -55,10 +54,11 @@ h1 {
 }
 
 .card-count{
-  font-size: 25px;
+  font-size: 35px;
   font-style: oblique;
   height: 25px;
   text-align: center;
+  margin: 0.5em;
 }
 
 .card-display {
@@ -78,42 +78,42 @@ h1 {
 
 .p0-stack-5 {
   box-shadow:
-    0px 0px 50px 0px #fff200,
-    3px 3px 0px 0px #FFFFB7,
-    6px 6px 0px 0px #FFF192,
-    9px 9px 0px 0px #FFEA61,
-    12px 12px 0px 0px #FFDD3C,
-    15px 15px 0px 0px #FFD400;
+    0px 0px 120px 8px #fff200,
+    4px 4px 0px 0px #FFFFB7,
+    8px 8px 0px 0px #FFF192,
+    12px 12px 0px 0px #FFEA61,
+    16px 16px 0px 0px #FFDD3C,
+    20px 20px 0px 0px #FFD400;
 }
 
 .p0-stack-4 {
   box-shadow:
-    0px 0px 50px 0px #fff200,
-    3px 3px 0px 0px #FFFFB7,
-    6px 6px 0px 0px #FFF192,
-    9px 9px 0px 0px #FFEA61,
-    12px 12px 0px 0px #FFDD3C;
+    0px 0px 90px 6px #fff200,
+    4px 4px 0px 0px #FFFFB7,
+    8px 8px 0px 0px #FFF192,
+    12px 12px 0px 0px #FFEA61,
+    16px 16px 0px 0px #FFDD3C;
 }
 
 .p0-stack-3 {
   box-shadow:
-    0px 0px 50px 0px #fff200,
-    3px 3px 0px 0px #FFFFB7,
-    6px 6px 0px 0px #FFF192,
-    9px 9px 0px 0px #FFEA61;
+    0px 0px 70px 4px #fff200,
+    4px 4px 0px 0px #FFFFB7,
+    8px 8px 0px 0px #FFF192,
+    12px 12px 0px 0px #FFEA61;
 }
 
 .p0-stack-2 {
   box-shadow:
-    0px 0px 50px 0px #fff200,
-    3px 3px 0px 0px #FFFFB7,
-    6px 6px 0px 0px #FFF192;
+    0px 0px 50px 2px #fff200,
+    4px 4px 0px 0px #FFFFB7,
+    8px 8px 0px 0px #FFF192;
 }
 
 .p0-stack-1 {
   box-shadow:
-    0px 0px 50px 0px #fff200,
-    3px 3px 0px 0px #FFFFB7;
+    0px 0px 20px 0px #fff200,
+    4px 4px 0px 0px #FFFFB7;
 }
 
 .p0-stack-0 {
@@ -122,42 +122,42 @@ h1 {
 
 .p1-stack-5 {
   box-shadow:
-    0px 0px 50px 0px #4666FF,
-    3px 3px 0px 0px #E1EEFF,
-    6px 6px 0px 0px #CAE6FF,
-    9px 9px 0px 0px #A1D8FF,
-    12px 12px 0px 0px #5FB8FF,
-    15px 15px 0px 0px #289FED;
+    0px 0px 120px 8px #4666FF,
+    4px 4px 0px 0px #E1EEFF,
+    8px 8px 0px 0px #CAE6FF,
+    12px 12px 0px 0px #A1D8FF,
+    16px 16px 0px 0px #5FB8FF,
+    20px 20px 0px 0px #289FED;
 }
 
 .p1-stack-4 {
   box-shadow:
-    0px 0px 50px 0px #4666FF,
-    3px 3px 0px 0px #E1EEFF,
-    6px 6px 0px 0px #CAE6FF,
-    9px 9px 0px 0px #A1D8FF,
-    12px 12px 0px 0px #5FB8FF;
+    0px 0px 90px 6px #4666FF,
+    4px 4px 0px 0px #E1EEFF,
+    8px 8px 0px 0px #CAE6FF,
+    12px 12px 0px 0px #A1D8FF,
+    16px 16px 0px 0px #5FB8FF;
 }
 
 .p1-stack-3 {
   box-shadow:
-    0px 0px 50px 0px #4666FF,
-    3px 3px 0px 0px #E1EEFF,
-    6px 6px 0px 0px #CAE6FF,
-    9px 9px 0px 0px #A1D8FF;
+    0px 0px 70px 4px #4666FF,
+    4px 4px 0px 0px #E1EEFF,
+    8px 8px 0px 0px #CAE6FF,
+    12px 12px 0px 0px #A1D8FF;
 }
 
 .p1-stack-2 {
   box-shadow:
-    0px 0px 50px 0px #4666FF,
-    3px 3px 0px 0px #E1EEFF,
-    6px 6px 0px 0px #CAE6FF;
+    0px 0px 50px 2px #4666FF,
+    4px 4px 0px 0px #E1EEFF,
+    8px 8px 0px 0px #CAE6FF;
 }
 
 .p1-stack-1 {
   box-shadow:
-    0px 0px 50px 0px #4666FF,
-    3px 3px 0px 0px #E1EEFF;
+    0px 0px 20px 0px #4666FF,
+    4px 4px 0px 0px #E1EEFF;
 }
 
 .p1-stack-0 {
