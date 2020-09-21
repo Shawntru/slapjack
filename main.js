@@ -38,6 +38,8 @@ function checkEndGame() {
   for (var i = 0; i < 2; i++) {
     if (game.players[i].hand.length === 54) game.endGame([i]);
   }
+  if (game.isRunning === false)
+    document.getElementById('title').innerText = `Player ${game.winner + 1} Wins!`;
 }
 
 function updateGraphics() {
@@ -70,7 +72,7 @@ function updateCentralPile() {
   centerImage.src = `./assets/${card}.png`;
   centerImage.classList.add(`player-${other(game.playerTurn)}`);
   centerImage.classList.remove(`player-${game.playerTurn}`);
-  var degrees = (Math.random() * 6 - 2);
+  var degrees = (Math.random() * 6 - 3);
   centerImage.style.transform = `scale(1.3) rotate(${degrees}deg)`;
 }
 
