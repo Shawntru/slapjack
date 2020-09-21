@@ -1,6 +1,8 @@
 var game;
 
 var centerImage = document.getElementById('center');
+// var player0Cards = document.getElementById('player-0');
+// var player1Cards = document.getElementById('player-1');
 
 window.onload = function() {
   game = new Game;
@@ -19,30 +21,61 @@ function keyPress(key) {
 
 function updateGameState(action, player) {
   if (action === 'flip') game.flipCard(game.playerTurn);
-  if (action === 'slap') game.checkSlap(player);
+  if (action === 'slap') {
+    game.checkSlap(player);
+    animate(centerImage, 'slap');
+  }
   updateGraphics();
   checkEndGame();
-}
-
-function checkEndGame() {
-  for (var i = 0; i < 2; i++) {
-    if (game.players[i].hand.length === 54) {
-      game.endGame([i]);
-    }
-  }
 }
 
 function updateGraphics() {
   updateCardCount();
   checkEmptyPlayer();
+  updateStackEffect();
   if (checkEmptyCenter()) return;
   updateCentralPile();
 }
 
-function updateCardCount(){
+function checkEndGame() {
+  for (var i = 0; i < 2; i++) {
+    if (game.players[i].hand.length === 54) game.endGame(i);
+  }
+  if (game.isRunning === false)
+    document.getElementById('title').innerText = `Player ${game.winner + 1} Wins!`;
+}
+
+function animate(element, animation) {
+  element.classList.toggle(animation);
+  setTimeout(function() {
+    element.classList.toggle(animation);
+  }, 500);
+}
+
+function updateCardCount() {
   for (var i = 0; i < 2; i++) {
     var countDisplay = document.getElementById(`${game.players[i].id}-count`);
-    countDisplay.innerText = game.players[i].hand.length;
+    var handSize = game.players[i].hand.length;
+    var animation = (countDisplay.innerText > handSize) ? 'big-slap' : 'bump';
+    if (!(countDisplay.innerText == handSize)) animate(countDisplay, animation);
+    countDisplay.innerText = handSize;
+  }
+}
+
+function updateStackEffect() {
+  for (var i = 0; i < 2; i++) {
+    clearStackEffect(i);
+    var handSize = game.players[i].hand.length;
+    var stackDepth = Math.floor(handSize * .1);
+    var playerDeck = document.getElementById(`player-${i}`);
+    playerDeck.classList.add(`p${i}-stack-${stackDepth}`);
+  }
+}
+
+function clearStackEffect(player) {
+  var playerDeck = document.getElementById(`player-${player}`);
+  for (var i = 0; i < 6; i++) {
+    playerDeck.classList.remove(`p${player}-stack-${i}`);
   }
 }
 
@@ -59,6 +92,8 @@ function updateCentralPile() {
   centerImage.src = `./assets/${card}.png`;
   centerImage.classList.add(`player-${other(game.playerTurn)}`);
   centerImage.classList.remove(`player-${game.playerTurn}`);
+  var degrees = (Math.random() * 6 - 3);
+  centerImage.style.transform = `scale(1.3) rotate(${degrees}deg)`;
 }
 
 function checkEmptyPlayer() {
@@ -73,6 +108,7 @@ function checkEmptyCenter() {
   if (!game.centralPile.length) {
     centerImage.src = `./assets/back.png`;
     centerImage.classList.add('empty-stack');
+    centerImage.style.transform = 'scale(1.3) rotate(0deg)';
     return true;
   } else centerImage.classList.remove('empty-stack');
 }

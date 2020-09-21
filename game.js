@@ -45,9 +45,9 @@ class Game {
   }
 
   endGame(winner) {
+    this.winner = winner;
     this.players[winner].updateWinCount();
     this.isRunning = false;
-    console.log(`Winner is player ${[winner]}!`);
   }
 
   cantSlap(topCard, player) {
