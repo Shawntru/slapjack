@@ -19,9 +19,19 @@ function keyPress(key) {
 
 function updateGameState(action, player) {
   if (action === 'flip') game.flipCard(game.playerTurn);
-  if (action === 'slap') game.checkSlap(player);
+  if (action === 'slap') {
+    game.checkSlap(player);
+    animate(centerImage, 'slap');
+  }
   updateGraphics();
   checkEndGame();
+}
+
+function animate(element, animation) {
+  element.classList.toggle(animation);
+  setTimeout(function() {
+    element.classList.toggle(animation);
+  }, 333);
 }
 
 function checkEndGame() {
@@ -40,7 +50,10 @@ function updateGraphics() {
 function updateCardCount(){
   for (var i = 0; i < 2; i++) {
     var countDisplay = document.getElementById(`${game.players[i].id}-count`);
-    countDisplay.innerText = game.players[i].hand.length;
+    var handSize = game.players[i].hand.length;
+    var animation = (countDisplay.innerText > handSize) ? 'big-slap' : 'bump';
+    if (!(countDisplay.innerText == handSize)) animate(countDisplay, animation);
+    countDisplay.innerText = handSize;
   }
 }
 
@@ -57,6 +70,8 @@ function updateCentralPile() {
   centerImage.src = `./assets/${card}.png`;
   centerImage.classList.add(`player-${other(game.playerTurn)}`);
   centerImage.classList.remove(`player-${game.playerTurn}`);
+  var degrees = (Math.random() * 6 - 2);
+  centerImage.style.transform = `scale(1.3) rotate(${degrees}deg)`;
 }
 
 function checkEmptyPlayer() {
@@ -71,6 +86,7 @@ function checkEmptyCenter() {
   if (!game.centralPile.length) {
     centerImage.src = `./assets/back.png`;
     centerImage.classList.add('empty-stack');
+    centerImage.style.transform = 'scale(1.3) rotate(0deg)';
     return true;
   } else centerImage.classList.remove('empty-stack');
 }
