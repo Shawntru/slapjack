@@ -1,6 +1,8 @@
 var game;
 
 var centerImage = document.getElementById('center');
+// var player0Cards = document.getElementById('player-0');
+// var player1Cards = document.getElementById('player-1');
 
 window.onload = function() {
   game = new Game;
@@ -27,35 +29,53 @@ function updateGameState(action, player) {
   checkEndGame();
 }
 
-function animate(element, animation) {
-  element.classList.toggle(animation);
-  setTimeout(function() {
-    element.classList.toggle(animation);
-  }, 333);
+function updateGraphics() {
+  updateCardCount();
+  checkEmptyPlayer();
+  updateStackEffect();
+  if (checkEmptyCenter()) return;
+  updateCentralPile();
 }
 
 function checkEndGame() {
   for (var i = 0; i < 2; i++) {
-    if (game.players[i].hand.length === 54) game.endGame([i]);
+    if (game.players[i].hand.length === 54) game.endGame(i);
   }
   if (game.isRunning === false)
     document.getElementById('title').innerText = `Player ${game.winner + 1} Wins!`;
 }
 
-function updateGraphics() {
-  updateCardCount();
-  checkEmptyPlayer();
-  if (checkEmptyCenter()) return;
-  updateCentralPile();
+function animate(element, animation) {
+  element.classList.toggle(animation);
+  setTimeout(function() {
+    element.classList.toggle(animation);
+  }, 500);
 }
 
-function updateCardCount(){
+function updateCardCount() {
   for (var i = 0; i < 2; i++) {
     var countDisplay = document.getElementById(`${game.players[i].id}-count`);
     var handSize = game.players[i].hand.length;
     var animation = (countDisplay.innerText > handSize) ? 'big-slap' : 'bump';
     if (!(countDisplay.innerText == handSize)) animate(countDisplay, animation);
     countDisplay.innerText = handSize;
+  }
+}
+
+function updateStackEffect() {
+  for (var i = 0; i < 2; i++) {
+    clearStackEffect(i);
+    var handSize = game.players[i].hand.length;
+    var stackDepth = Math.floor(handSize * .1);
+    var playerDeck = document.getElementById(`player-${i}`);
+    playerDeck.classList.add(`p${i}-stack-${stackDepth}`);
+  }
+}
+
+function clearStackEffect(player) {
+  var playerDeck = document.getElementById(`player-${player}`);
+  for (var i = 0; i < 6; i++) {
+    playerDeck.classList.remove(`p${player}-stack-${i}`);
   }
 }
 
