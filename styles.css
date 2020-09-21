@@ -189,11 +189,12 @@ h1 {
 #replay-btn {
   width: 50%;
   height: auto;
-  margin: -40px;
+  margin: -70px;
   font-size: 20px;
   border-radius: 50px;
   border: ridge;
   color: black;
+  cursor: pointer;
 }
 
 @keyframes slap {
