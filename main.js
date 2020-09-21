@@ -22,6 +22,8 @@ function updateGameState(action, player) {
     game.checkSlap(player);
     animate(centerImage, 'slap');
   }
+  if (game.checkBothEmpty())
+    window.setTimeout(function() {updateGraphics();}, 1500);
   updateGraphics();
   checkEndGame();
 }
@@ -50,21 +52,27 @@ function animate(element, animation) {
 }
 
 function updateCardCount() {
+  var countDisplay;
+  var handSize;
+  var animation;
   for (var i = 0; i < 2; i++) {
-    var countDisplay = document.getElementById(`${game.players[i].id}-count`);
-    var handSize = game.players[i].hand.length;
-    var animation = (countDisplay.innerText > handSize) ? 'big-slap' : 'bump';
+    countDisplay = document.getElementById(`${game.players[i].id}-count`);
+    handSize = game.players[i].hand.length;
+    animation = (countDisplay.innerText > handSize) ? 'big-slap' : 'bump';
     if (!(countDisplay.innerText == handSize)) animate(countDisplay, animation);
     countDisplay.innerText = handSize;
   }
 }
 
 function updateStackEffect() {
+  var handSize;
+  var stackDepth;
+  var playerDecklayer;
   for (var i = 0; i < 2; i++) {
     clearStackEffect(i);
-    var handSize = game.players[i].hand.length;
-    var stackDepth = Math.floor(handSize * .1);
-    var playerDeck = document.getElementById(`player-${i}`);
+    handSize = game.players[i].hand.length;
+    stackDepth = Math.floor(handSize * .1);
+    playerDeck = document.getElementById(`player-${i}`);
     playerDeck.classList.add(`p${i}-stack-${stackDepth}`);
   }
 }
@@ -77,9 +85,11 @@ function clearStackEffect(player) {
 }
 
 function updateWins() {
+  var winDisplay;
+  var winCount;
   for (var i = 0; i < 2; i++) {
-    var winDisplay = document.getElementById(`${i}-wins`);
-    var winCount = localStorage.getItem([i]);
+    winDisplay = document.getElementById(`${i}-wins`);
+    winCount = localStorage.getItem([i]);
     if (winCount) winDisplay.innerText = `Wins:  ${winCount}`;
   }
 }
@@ -94,8 +104,9 @@ function updateCentralPile() {
 }
 
 function checkEmptyPlayer() {
+  var playerDeck;
   for (var i = 0; i < 2; i++) {
-    var playerDeck = document.getElementById(`player-${i}`);
+    playerDeck = document.getElementById(`player-${i}`);
     if (!game.players[i].hand.length) playerDeck.classList.add('empty-stack');
     else playerDeck.classList.remove('empty-stack');
   }
