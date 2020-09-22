@@ -63,7 +63,7 @@ function updateCardCount() {
   for (var i = 0; i < 2; i++) {
     countDisplay = document.getElementById(`${game.players[i].id}-count`);
     handSize = game.players[i].hand.length;
-    animation = (countDisplay.innerText > handSize) ? 'big-slap' : 'bump';
+    animation = (countDisplay.innerText > handSize) ? 'tick-down' : 'tick-up';
     if (!(countDisplay.innerText == handSize)) animate(countDisplay, animation);
     countDisplay.innerText = handSize;
   }
