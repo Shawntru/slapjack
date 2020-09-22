@@ -1,5 +1,6 @@
 var game;
 var centerImage = document.getElementById('center');
+var jacksOnlyDisplay = document.getElementById('jacks-only');
 
 window.onload = function() {
   game = new Game;
@@ -24,7 +25,7 @@ function updateGameState(action, player) {
     animate(centerImage, 'slap');
   }
   if (game.checkBothEmpty())
-    window.setTimeout(function() {updateGraphics();}, 1000);
+    window.setTimeout(function() {updateGraphics()}, 1000);
   updateGraphics();
   checkEndGame();
 }
@@ -33,6 +34,7 @@ function updateGraphics() {
   updateCardCount();
   checkEmptyPlayer();
   updateStackEffect();
+  jacksOnly();
   if (checkEmptyCenter()) return;
   updateCentralPile();
 }
@@ -46,6 +48,7 @@ function checkEndGame() {
     var replayBtn = document.getElementById('replay-btn');
     docTitle.innerText = `Player ${game.winner + 1} Wins!`;
     replayBtn.classList.remove('hidden');
+    jacksOnlyDisplay.classList.add('hidden')
   }
 }
 
@@ -124,6 +127,15 @@ function checkEmptyCenter() {
     centerImage.style.transform = 'scale(1.3) rotate(0deg)';
     return true;
   } else centerImage.classList.remove('empty-stack');
+}
+
+function jacksOnly() {
+  for (var i = 0; i < 2; i++) {
+    if (!game.players[i].hand.length) {
+      jacksOnlyDisplay.classList.remove('hidden');
+      return true;
+    } else jacksOnlyDisplay.classList.add('hidden');
+  }
 }
 
 function other(player) {
