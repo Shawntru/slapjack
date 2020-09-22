@@ -1,5 +1,6 @@
 var game;
 var centerImage = document.getElementById('center');
+var jacksOnlyDisplay = document.getElementById('jacks-only');
 
 window.onload = function() {
   game = new Game;
@@ -11,7 +12,8 @@ document.onkeydown = keyPress;
 function keyPress(key) {
   if (!game.isRunning) return;
   if ((key.code === 'KeyQ' && game.playerTurn === 0) ||
-      (key.code === 'KeyP' && game.playerTurn === 1)) updateGameState('flip');
+      (key.code === 'KeyP' && game.playerTurn === 1))
+        updateGameState('flip');
   if (key.code === 'KeyF') updateGameState('slap', 0);
   if (key.code === 'KeyJ') updateGameState('slap', 1);
 }
@@ -23,7 +25,7 @@ function updateGameState(action, player) {
     animate(centerImage, 'slap');
   }
   if (game.checkBothEmpty())
-    window.setTimeout(function() {updateGraphics();}, 1500);
+    window.setTimeout(function() {updateGraphics()}, 1000);
   updateGraphics();
   checkEndGame();
 }
@@ -32,6 +34,7 @@ function updateGraphics() {
   updateCardCount();
   checkEmptyPlayer();
   updateStackEffect();
+  jacksOnly();
   if (checkEmptyCenter()) return;
   updateCentralPile();
 }
@@ -45,6 +48,7 @@ function checkEndGame() {
     var replayBtn = document.getElementById('replay-btn');
     docTitle.innerText = `Player ${game.winner + 1} Wins!`;
     replayBtn.classList.remove('hidden');
+    jacksOnlyDisplay.classList.add('hidden')
   }
 }
 
@@ -62,7 +66,7 @@ function updateCardCount() {
   for (var i = 0; i < 2; i++) {
     countDisplay = document.getElementById(`${game.players[i].id}-count`);
     handSize = game.players[i].hand.length;
-    animation = (countDisplay.innerText > handSize) ? 'big-slap' : 'bump';
+    animation = (countDisplay.innerText > handSize) ? 'tick-down' : 'tick-up';
     if (!(countDisplay.innerText == handSize)) animate(countDisplay, animation);
     countDisplay.innerText = handSize;
   }
@@ -123,6 +127,15 @@ function checkEmptyCenter() {
     centerImage.style.transform = 'scale(1.3) rotate(0deg)';
     return true;
   } else centerImage.classList.remove('empty-stack');
+}
+
+function jacksOnly() {
+  for (var i = 0; i < 2; i++) {
+    if (!game.players[i].hand.length) {
+      jacksOnlyDisplay.classList.remove('hidden');
+      return true;
+    } else jacksOnlyDisplay.classList.add('hidden');
+  }
 }
 
 function other(player) {

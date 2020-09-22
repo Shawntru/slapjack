@@ -13,14 +13,6 @@ class Game {
     this.players[player].hand.push(card[0])
   }
 
-  shufflePlayerDeck(shuffleCards, player) {
-    this.centralPile = [];
-    this.players[player].hand = [];
-    while (shuffleCards.length > 0) {
-      this.shuffle(shuffleCards, player);
-    }
-  }
-
   dealDeck() {
     while (this.centralPile.length > 0) {
       this.shuffle(this.centralPile, this.playerTurn);
@@ -41,14 +33,15 @@ class Game {
     var topCard = (this.centralPile.length > 0) ? this.centralPile[0].charAt(0) : undefined;
     var cardMatch = this.matchConditions(topCard, secCard, thirdCard);
     var isJack = (topCard === 'J') ? true : false;
-    if (this.jacksOnly() && !isJack) this.awardCenterPile(other(player));
+    if (jacksOnly() && !isJack) {
+      this.playerTurn = other(this.playerTurn);
+      this.awardCenterPile(other(player));
+    }
     else if (!isJack && !cardMatch) this.penalize(player);
-    else if (topCard === 'J' || cardMatch) this.awardCenterPile(player);
-  }
-
-  awardCenterPile(player) {
-    var shuffleCards = this.centralPile.concat(this.players[player].hand)
-    this.shufflePlayerDeck(shuffleCards, player);
+    else if (isJack || cardMatch) {
+      if (jacksOnly()) this.playerTurn = other(this.playerTurn);
+      this.awardCenterPile(player);
+    }
   }
 
   matchConditions(topCard, secCard, thirdCard) {
@@ -58,9 +51,12 @@ class Game {
       return true;
   }
 
-  jacksOnly() {
-    for (var i = 0; i < 2; i++) {
-      if (!this.players[i].hand.length) return true;
+  awardCenterPile(player) {
+    var playerCards = this.centralPile.concat(this.players[player].hand);
+    this.centralPile = [];
+    this.players[player].hand = [];
+    while (playerCards.length > 0) {
+      this.shuffle(playerCards, player);
     }
   }
 
@@ -88,8 +84,8 @@ class Game {
     }
     if (emptyHands === 2 && !(topCard === 'J')) {
       window.setTimeout(function() {
-        thisGame.shufflePlayerDeck(thisGame.centralPile, thisGame.playerTurn);
-      }, 1500);
+        thisGame.awardCenterPile(thisGame.playerTurn);
+      }, 1000);
       return true;
     };
   }
