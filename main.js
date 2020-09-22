@@ -11,7 +11,8 @@ document.onkeydown = keyPress;
 function keyPress(key) {
   if (!game.isRunning) return;
   if ((key.code === 'KeyQ' && game.playerTurn === 0) ||
-      (key.code === 'KeyP' && game.playerTurn === 1)) updateGameState('flip');
+      (key.code === 'KeyP' && game.playerTurn === 1))
+        updateGameState('flip');
   if (key.code === 'KeyF') updateGameState('slap', 0);
   if (key.code === 'KeyJ') updateGameState('slap', 1);
 }
@@ -23,7 +24,7 @@ function updateGameState(action, player) {
     animate(centerImage, 'slap');
   }
   if (game.checkBothEmpty())
-    window.setTimeout(function() {updateGraphics();}, 1500);
+    window.setTimeout(function() {updateGraphics();}, 1000);
   updateGraphics();
   checkEndGame();
 }

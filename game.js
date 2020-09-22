@@ -41,9 +41,15 @@ class Game {
     var topCard = (this.centralPile.length > 0) ? this.centralPile[0].charAt(0) : undefined;
     var cardMatch = this.matchConditions(topCard, secCard, thirdCard);
     var isJack = (topCard === 'J') ? true : false;
-    if (this.jacksOnly() && !isJack) this.awardCenterPile(other(player));
+    if (this.jacksOnly() && !isJack) {
+      this.playerTurn = other(this.playerTurn);
+      this.awardCenterPile(other(player));
+    }
     else if (!isJack && !cardMatch) this.penalize(player);
-    else if (topCard === 'J' || cardMatch) this.awardCenterPile(player);
+    else if (isJack || cardMatch) {
+      if (this.jacksOnly()) this.playerTurn = other(this.playerTurn);
+      this.awardCenterPile(player);
+    }
   }
 
   awardCenterPile(player) {
@@ -89,7 +95,7 @@ class Game {
     if (emptyHands === 2 && !(topCard === 'J')) {
       window.setTimeout(function() {
         thisGame.shufflePlayerDeck(thisGame.centralPile, thisGame.playerTurn);
-      }, 1500);
+      }, 1000);
       return true;
     };
   }
