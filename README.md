@@ -31,6 +31,7 @@ SLAPJACK! is a fully playable card game for 2 people. Be faster than your oppone
 + When one player is reduced to below 10 cards, their deck border changes to an animated glowing pink color.
 + When one player is out of cards and only Jacks are allowed to be slapped, a 'Jacks ONLY!' message gets displayed and animated above the center pile. 
 + Deck glow colors have been designed to be distinguishable to players with most forms of color blindness.
++ At the end of the game, the 'Slapjack!' title changes to reflect the winner.
 
 <img src="https://user-images.githubusercontent.com/68252181/93940137-31204780-fce9-11ea-89dd-d33ecd751e78.png" width="23%"></img> <img src="https://user-images.githubusercontent.com/68252181/93940139-31204780-fce9-11ea-8736-9a7a7bb07385.png" width="23%"></img> <img src="https://user-images.githubusercontent.com/68252181/93940130-2e255700-fce9-11ea-98c2-99c75e1dcd9e.png" width="23%"></img> <img src="https://user-images.githubusercontent.com/68252181/93940134-2f568400-fce9-11ea-8e12-6b8ac606c9b0.png" width="23%"></img> 
 
