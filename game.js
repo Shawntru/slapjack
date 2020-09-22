@@ -8,7 +8,7 @@ class Game {
   }
 
   shuffle(cards, player) {
-    var i = this.getRandomIndex(cards);
+    var i = Math.floor(Math.random() * cards.length);;
     var card = cards.splice(i, 1);
     this.players[player].hand.push(card[0])
   }
@@ -36,24 +36,20 @@ class Game {
   }
 
   checkSlap(player) {
-    if (this.centralPile.length > 2) var thirdCard = this.centralPile[2].charAt(0);
-    if (this.centralPile.length > 1) var secCard = this.centralPile[1].charAt(0);
-    if (this.centralPile.length > 0) var topCard = this.centralPile[0].charAt(0);
+    var thirdCard = (this.centralPile.length > 2) ? this.centralPile[2].charAt(0) : undefined;
+    var secCard = (this.centralPile.length > 1) ? this.centralPile[1].charAt(0) : undefined;
+    var topCard = (this.centralPile.length > 0) ? this.centralPile[0].charAt(0) : undefined;
     var cardMatch = this.matchConditions(topCard, secCard, thirdCard);
-    if ((this.jacksOnly() && cardMatch) ||
-        (!(topCard === 'J') && !cardMatch))
-          this.penalize(player);
-    else if (topCard === 'J' || cardMatch) {
-      var shuffleCards = this.centralPile.concat(this.players[player].hand)
-      this.shufflePlayerDeck(shuffleCards, player);
-    }
+    var isJack = (topCard === 'J') ? true : false;
+    if (this.jacksOnly() && !isJack) this.awardCenterPile(other(player));
+    else if (!isJack && !cardMatch) this.penalize(player);
+    else if (topCard === 'J' || cardMatch) this.awardCenterPile(player);
   }
 
-    // if (this.cantSlap(topCard, player)) return this.endGame(other(player));
-    // if (topCard === 'J' || topCard === 'W' || topCard === secCard || topCard === thirdCard) {
-    //   var shuffleCards = this.centralPile.concat(this.players[player].hand)
-    //   this.shufflePlayerDeck(shuffleCards, player);
-    // } else this.penalize(player);
+  awardCenterPile(player) {
+    var shuffleCards = this.centralPile.concat(this.players[player].hand)
+    this.shufflePlayerDeck(shuffleCards, player);
+  }
 
   matchConditions(topCard, secCard, thirdCard) {
     if (topCard === 'W' ||
@@ -96,9 +92,5 @@ class Game {
       }, 1500);
       return true;
     };
-  }
-
-  getRandomIndex(array) {
-    return Math.floor(Math.random() * array.length);
   }
 }
