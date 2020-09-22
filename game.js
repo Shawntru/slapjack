@@ -39,24 +39,39 @@ class Game {
     if (this.centralPile.length > 2) var thirdCard = this.centralPile[2].charAt(0);
     if (this.centralPile.length > 1) var secCard = this.centralPile[1].charAt(0);
     if (this.centralPile.length > 0) var topCard = this.centralPile[0].charAt(0);
-    if (this.cantSlap(topCard, player)) return this.endGame(other(player));
-    if (topCard === 'J' ||topCard === 'W' || topCard === secCard || topCard === thirdCard) {
+    var cardMatch = this.matchConditions(topCard, secCard, thirdCard);
+    if ((this.jacksOnly() && cardMatch) ||
+        (!(topCard === 'J') && !cardMatch))
+          this.penalize(player);
+    else if (topCard === 'J' || cardMatch) {
       var shuffleCards = this.centralPile.concat(this.players[player].hand)
       this.shufflePlayerDeck(shuffleCards, player);
-    } else this.penalize(player);
+    }
+  }
+
+    // if (this.cantSlap(topCard, player)) return this.endGame(other(player));
+    // if (topCard === 'J' || topCard === 'W' || topCard === secCard || topCard === thirdCard) {
+    //   var shuffleCards = this.centralPile.concat(this.players[player].hand)
+    //   this.shufflePlayerDeck(shuffleCards, player);
+    // } else this.penalize(player);
+
+  matchConditions(topCard, secCard, thirdCard) {
+    if (topCard === 'W' ||
+        topCard === secCard ||
+        topCard === thirdCard)
+      return true;
+  }
+
+  jacksOnly() {
+    for (var i = 0; i < 2; i++) {
+      if (!this.players[i].hand.length) return true;
+    }
   }
 
   endGame(winner) {
     this.winner = winner;
     this.players[winner].updateWinCount();
     this.isRunning = false;
-  }
-
-  cantSlap(topCard, player) {
-    var handQuantity = this.players[player].hand.length;
-    if (handQuantity > 0) return false;
-    else if (handQuantity === 0 && topCard === 'J') return false;
-    else return true;
   }
 
   penalize(player) {
