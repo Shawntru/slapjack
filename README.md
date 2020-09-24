@@ -2,7 +2,10 @@
 
 SLAPJACK! is a fully playable card game for 2 people. Be faster than your opponent and gain all the cards into your deck to win the game!
 
+### [Play the Game Here!](https://shawntru.github.io/slapjack/)
+
 ![Play-initial](https://user-images.githubusercontent.com/68252181/93940135-2fef1a80-fce9-11ea-807f-dc73b452f59d.png)
+
 
 ## How to Play:
 
